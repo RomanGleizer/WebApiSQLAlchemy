@@ -14,6 +14,16 @@ def create_item(db: Session, name: str, price: int):
     db.refresh(db_item)
     return db_item
 
+def update_item(db: Session, item_id: int, name: str, price: int):
+    item = get_item(db, item_id)
+    if item:
+        item.name = name
+        item.price = price
+        db.commit()
+        db.refresh(item)
+        return item
+    return None
+
 def delete_item(db: Session, item_id: int):
     item = get_item(db, item_id)
     if item:
